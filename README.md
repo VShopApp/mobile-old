@@ -1,50 +1,16 @@
-# Welcome to your Expo app 👋
+<h1><img src="./assets/logo-t-100.png" style="float:left;margin-right:10px;" height="40px" />VShop</h1>
+<a href="https://github.com/VShopApp/mobile/releases/latest/download/VShop.apk">
+  <img alt="GitHub release (latest by date and asset)" src="https://img.shields.io/github/downloads/VShopApp/mobile/latest/VShop.apk?label=APK&color=%23fa4454&logo=android&logoColor=white">
+</a>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+VShop allows you to check your game Store, Night Market, Profile and more. It runs entirely on your device and securely transmits your credentials to the official Riot Games servers (more information in our <a href="https://docs.vshop.one/security">docs</a>).
 
-## Get started
+## Translations
+VShop is available in 16 different languages. The translation files are available in [VShopApp/translations](https://github.com/VShopApp/translations), which is synced with [weblate](https://weblate.vasc.cloud).
 
-1. Install dependencies
+## Credits
+This app would not have been possible without the following projects:
+- [Unofficial API documentation](https://github.com/techchrism/valorant-api-docs)
+- [In-Game assets](https://valorant-api.com) 
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+I would also like to thank all of our translations and other projects members, which are listed on the [credits page](https://vshop.one/credits) 💖

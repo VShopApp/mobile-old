@@ -1,0 +1,62 @@
+[
+  {
+    "langCode": "ar",
+    "VAPILangCode": "ar-AE"
+  },
+  {
+    "langCode": "de",
+    "VAPILangCode": "de-DE"
+  },
+  {
+    "langCode": "es",
+    "VAPILangCode": "es-ES"
+  },
+  {
+    "langCode": "fr",
+    "VAPILangCode": "fr-FR"
+  },
+  {
+    "langCode": "it",
+    "VAPILangCode": "it-IT"
+  },
+  {
+    "langCode": "jp",
+    "VAPILangCode": "ja-JP"
+  },
+  {
+    "langCode": "ko",
+    "VAPILangCode": "ko-KR"
+  },
+  {
+    "langCode": "pl",
+    "VAPILangCode": "pl-PL"
+  },
+  {
+    "langCode": "pt",
+    "VAPILangCode": "pt-BR"
+  },
+  {
+    "langCode": "ru",
+    "VAPILangCode": "ru-RU"
+  },
+  {
+    "langCode": "th",
+    "VAPILangCode": "th-TH"
+  },
+  {
+    "langCode": "tr",
+    "VAPILangCode": "tr-TR"
+  },
+  {
+    "langCode": "vi",
+    "VAPILangCode": "vi-VN"
+  },
+  {
+    "langCode": "zh-Hans",
+    "VAPILangCode": "zh-CN"
+  },
+  {
+    "langCode": "zh-Hant",
+    "VAPILangCode": "zh-TW"
+  }
+]
