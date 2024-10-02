@@ -34,6 +34,13 @@
         {
           "launchMode": "most-recent"
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#fa4454"
+        }
       ]
     ],
     "experiments": {

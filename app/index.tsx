@@ -1,6 +1,7 @@
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import Loading from "~/components/Loading";
 
-export default function Index() {
+function Index() {
   return (
     <View
       style={{
@@ -9,7 +10,9 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      <Loading />
     </View>
   );
 }
+
+export default Index;
