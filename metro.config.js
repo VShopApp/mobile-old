@@ -6,7 +6,13 @@ const { getDefaultConfig } = require("expo/metro-config");
 /** @type {import('expo/metro-config').MetroConfig} */
 const config = getDefaultConfig(__dirname);
 
-// See https://gist.github.com/parshap/e3063d9bf6058041b34b26b7166fd6bd
-config.resolver.extraNodeModules = require("node-libs-react-native");
+// Needed for https-browsify
+config.resolver.extraNodeModules = {
+  http: require.resolve("@tradle/react-native-http"),
+  url: require.resolve("url"),
+  stream: require.resolve("stream-browserify"),
+  util: require.resolve("util"),
+  events: require.resolve("events"),
+};
 
 module.exports = config;

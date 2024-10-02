@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Checkbox, List, Text, TouchableRipple } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { Linking, ToastAndroid, ScrollView } from "react-native";
@@ -7,11 +7,16 @@ import { Platform } from "react-native";
 import { useUserStore } from "~/hooks/useUserStore";
 import { useFeatureStore } from "~/hooks/useFeatureStore";
 import { useDonatePopupStore } from "~/components/popups/DonatePopup";
-import { useWishlistStore } from "~/hooks/useWishlistStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { defaultUser } from "~/utils/valorant-api";
 import * as Clipboard from "expo-clipboard";
 import { useRouter } from "expo-router";
+import {
+  isWishlistCheckRegistered,
+  registerWishlistCheck,
+  unregisterWishlistCheck,
+} from "~/utils/wishlist";
+import * as Notifications from "expo-notifications";
 
 function Settings() {
   const { t } = useTranslation();
@@ -20,7 +25,12 @@ function Settings() {
   const { isDonator, screenshotModeEnabled, toggleScreenshotMode } =
     useFeatureStore();
   const { showDonatePopup } = useDonatePopupStore();
-  const { notificationEnabled, setNotificationEnabled } = useWishlistStore();
+
+  const [isRegistered, setIsRegistered] = useState(false);
+
+  useEffect(() => {
+    checkWishlistCheckStatus();
+  }, []);
 
   const handleLogout = async () => {
     await CookieManager.clearAll(true);
@@ -29,35 +39,39 @@ function Settings() {
     router.replace("/setup");
   };
 
-  // TODO: Use expo-background-fetch
   const toggleNotificationEnabled = async () => {
     if (isDonator) {
-      const newValue = !notificationEnabled;
-      if (newValue) {
-        // const result = await requestNotifications(["alert"]);
-        // if (result.status == RESULTS.GRANTED) {
-        //   await messaging().subscribeToTopic("wishlist_timer");
-        //   ToastAndroid.show(
-        //     t("wishlist.notification.enabled"),
-        //     ToastAndroid.LONG
-        //   );
-        //   setNotificationEnabled(newValue);
-        // } else {
-        //   ToastAndroid.show(
-        //     t("wishlist.notification.no_permission"),
-        //     ToastAndroid.LONG
-        //   );
-        // }
+      if (!isRegistered) {
+        const permission = await Notifications.requestPermissionsAsync();
+        if (permission.granted) {
+          await registerWishlistCheck();
+          ToastAndroid.show(
+            t("wishlist.notification.enabled"),
+            ToastAndroid.LONG
+          );
+        } else {
+          ToastAndroid.show(
+            t("wishlist.notification.no_permission"),
+            ToastAndroid.LONG
+          );
+        }
       } else {
+        await unregisterWishlistCheck();
         ToastAndroid.show(
           t("wishlist.notification.disabled"),
           ToastAndroid.LONG
         );
-        setNotificationEnabled(newValue);
       }
+
+      await checkWishlistCheckStatus();
     } else {
       showDonatePopup();
     }
+  };
+
+  const checkWishlistCheckStatus = async () => {
+    const isRegistered = await isWishlistCheckRegistered();
+    setIsRegistered(isRegistered);
   };
 
   const showLastExecution = async () => {
@@ -104,7 +118,7 @@ function Settings() {
                 )}
                 right={() => (
                   <Checkbox
-                    status={notificationEnabled ? "checked" : "unchecked"}
+                    status={isRegistered ? "checked" : "unchecked"}
                     onPress={toggleNotificationEnabled}
                   />
                 )}

@@ -1,6 +1,6 @@
 {
   "name": "vshop",
-  "main": "index.ts",
+  "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",
@@ -23,11 +23,14 @@
     "@react-navigation/drawer": "^6.7.2",
     "@react-navigation/native": "^6.0.2",
     "@stripe/stripe-react-native": "0.37.2",
+    "@tradle/react-native-http": "^2.0.1",
     "axios": "^1.7.7",
     "deepmerge": "^4.3.1",
+    "events": "^3.3.0",
     "expo": "~51.0.28",
     "expo-application": "~5.9.1",
     "expo-av": "~14.0.7",
+    "expo-background-fetch": "~12.0.1",
     "expo-clipboard": "~6.0.3",
     "expo-constants": "~16.0.2",
     "expo-dev-client": "~4.0.27",
@@ -47,7 +50,6 @@
     "i18next": "^23.15.1",
     "i18next-resources-to-backend": "^1.2.1",
     "jwt-decode": "^4.0.0",
-    "node-libs-react-native": "^1.2.1",
     "posthog-react-native": "^3.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
@@ -62,6 +64,9 @@
     "react-native-web": "~0.19.10",
     "react-native-webview": "13.8.6",
     "recyclerlistview": "^4.2.1",
+    "stream-browserify": "^3.0.0",
+    "url": "^0.11.4",
+    "util": "^0.12.5",
     "zustand": "4.5.5"
   },
   "devDependencies": {
