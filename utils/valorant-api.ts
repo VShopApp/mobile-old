@@ -160,7 +160,7 @@ export async function parseShop(shop: IStorefrontV3) {
   let main: IShopItem[] = [];
   for (var i = 0; i < singleItemOffers.length; i++) {
     const skin = skins.find(
-      (_skin) => _skin.levels[0].uuid == singleItemOffers[i]
+      (_skin) => _skin.levels[0].uuid === singleItemOffers[i]
     ) as ISkin;
 
     main[i] = {
@@ -170,25 +170,26 @@ export async function parseShop(shop: IStorefrontV3) {
   }
 
   /* BUNDLES */
-  let bundles: IBundle[] = [];
-  for (var i = 0; i < shop.FeaturedBundle.Bundles.length; i++) {
-    let bundle = shop.FeaturedBundle.Bundles[i];
+  const bundles: IBundle[] = [];
+  for (var b = 0; b < shop.FeaturedBundle.Bundles.length; b++) {
+    const bundle = shop.FeaturedBundle.Bundles[b];
+    const bundleVAPI = (
+      await axios.request({
+        url: `https://valorant-api.com/v1/bundles/${
+          bundle.DataAssetID
+        }?language=${getVAPILang()}`,
+        method: "GET",
+      })
+    ).data.data;
 
-    bundles[i] = {
-      ...(
-        await axios.request({
-          url: `https://valorant-api.com/v1/bundles/${
-            bundle.DataAssetID
-          }?language=${getVAPILang()}`,
-          method: "GET",
-        })
-      ).data.data,
-      price: bundle.Items.map((item: any) => item.DiscountedPrice).reduce(
-        (a: any, b: any) => a + b
+    bundles.push({
+      ...bundleVAPI,
+      price: bundle.Items.map((item) => item.DiscountedPrice).reduce(
+        (a, b) => a + b
       ),
       items: bundle.Items.filter(
-        (item: any) => item.Item.ItemTypeID === VItemTypes.SkinLevel
-      ).map((item: any) => {
+        (item) => item.Item.ItemTypeID === VItemTypes.SkinLevel
+      ).map((item) => {
         const skin = skins.find(
           (_skin) => _skin.levels[0].uuid === item.Item.ItemID
         ) as ISkin;
@@ -198,25 +199,25 @@ export async function parseShop(shop: IStorefrontV3) {
           price: item.BasePrice,
         };
       }),
-    };
+    });
   }
 
   /* NIGHT MARKET */
   let nightMarket: INightMarketItem[] = [];
   if (shop.BonusStore) {
     var bonusStore = shop.BonusStore.BonusStoreOffers;
-    for (var i = 0; i < bonusStore.length; i++) {
-      let itemid = bonusStore[i].Offer.Rewards[0].ItemID;
+    for (var k = 0; k < bonusStore.length; k++) {
+      let itemid = bonusStore[k].Offer.Rewards[0].ItemID;
       const skin = skins.find(
         (_skin) => _skin.levels[0].uuid === itemid
       ) as ISkin;
 
-      nightMarket[i] = {
+      nightMarket.push({
         ...skin,
-        price: bonusStore[i].Offer.Cost[VCurrencies.VP],
-        discountedPrice: bonusStore[i].DiscountCosts[VCurrencies.VP],
-        discountPercent: bonusStore[i].DiscountPercent,
-      };
+        price: bonusStore[k].Offer.Cost[VCurrencies.VP],
+        discountedPrice: bonusStore[k].DiscountCosts[VCurrencies.VP],
+        discountPercent: bonusStore[k].DiscountPercent,
+      });
     }
   }
 

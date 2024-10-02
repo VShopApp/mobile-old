@@ -9,7 +9,7 @@ import { useFeatureStore } from "~/hooks/useFeatureStore";
 import { useDonatePopupStore } from "~/components/popups/DonatePopup";
 import { useWishlistStore } from "~/hooks/useWishlistStore";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { defaultUser } from "~/utils/ValorantAPI";
+import { defaultUser } from "~/utils/valorant-api";
 import * as Clipboard from "expo-clipboard";
 import { useRouter } from "expo-router";
 
@@ -136,7 +136,7 @@ function Settings() {
           />
         </TouchableRipple>
         <TouchableRipple
-          onPress={() => Linking.openURL("https://vshop.one/discord")}
+          onPress={() => Linking.openURL("https://vshop.one/credits")}
         >
           <List.Item
             title={t("credits")}
@@ -144,7 +144,7 @@ function Settings() {
           />
         </TouchableRipple>
         <TouchableRipple
-          onPress={() => Linking.openURL("https://vshop.one/discord")}
+          onPress={() => Linking.openURL("https://vshop.one/privacy")}
         >
           <List.Item
             title={t("privacy_policy")}

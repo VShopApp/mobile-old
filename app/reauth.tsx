@@ -18,8 +18,8 @@ import {
   loadSkins,
   loadVersion,
   parseShop,
-} from "~/utils/ValorantAPI";
-import { checkDonator } from "~/utils/VShopAPI";
+} from "~/utils/valorant-api";
+import { checkDonator } from "~/utils/vshop-api";
 import CookieManager from "@react-native-cookies/cookies";
 import { Paragraph, Title } from "react-native-paper";
 import WebView from "react-native-webview";

@@ -5,11 +5,11 @@ import {
   getUserId,
   loadVersion,
   reAuth,
-} from "./ValorantAPI";
+} from "./valorant-api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import i18n from "./localization";
-import { checkDonator } from "./VShopAPI";
+import { checkDonator } from "./vshop-api";
 import { useWishlistStore } from "~/hooks/useWishlistStore";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";

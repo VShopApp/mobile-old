@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   Title,
+  useTheme,
 } from "react-native-paper";
 import { Linking, ToastAndroid, View } from "react-native";
 import { create } from "zustand";
@@ -16,9 +17,9 @@ import {
   checkDonator,
   generatePaymentSheet,
   getCurrencies,
-} from "~/utils/VShopAPI";
+} from "~/utils/vshop-api";
 import { useStripe } from "@stripe/stripe-react-native";
-import { MaskedTextInput } from "react-native-mask-text";
+// import { MaskedTextInput } from "react-native-mask-text";
 import { useUserStore } from "~/hooks/useUserStore";
 import { useFeatureStore } from "~/hooks/useFeatureStore";
 import { useEffect, useState } from "react";
@@ -46,6 +47,7 @@ export default function DonatePopup() {
   const { user } = useUserStore();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
   const { enableDonator } = useFeatureStore();
+  const { colors } = useTheme();
 
   const initializePaymentSheet = async () => {
     const res = await generatePaymentSheet({
@@ -92,7 +94,7 @@ export default function DonatePopup() {
     getCurrencies().then((currencies) => {
       const userCurrency = currencies.find(
         (_currency) =>
-          _currency.code.toLowerCase() ==
+          _currency.code.toLowerCase() ===
           getLocales()[0].currencyCode?.toLocaleLowerCase()
       );
       if (userCurrency) setCurrency(userCurrency);
@@ -114,7 +116,7 @@ export default function DonatePopup() {
               source={require("~/assets/images/notification.png")}
               resizeMode="center"
               resizeMethod="scale"
-              style={{ height: 125 }}
+              style={{ height: 125, backgroundColor: colors.primary }}
             />
             <Card.Content style={{ marginTop: 5 }}>
               <View

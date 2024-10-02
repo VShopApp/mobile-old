@@ -23,7 +23,7 @@ export default function NightMarketItem(props: React.PropsWithChildren<props>) {
 
   return (
     <>
-      <Card style={{ margin: 5, backgroundColor: colors.backdrop }}>
+      <Card style={{ margin: 5, backgroundColor: colors.surface }}>
         <Card.Content>
           <Title>{props.item.displayName}</Title>
           <Paragraph>
@@ -50,7 +50,7 @@ export default function NightMarketItem(props: React.PropsWithChildren<props>) {
         <Card.Cover
           resizeMode="contain"
           style={{
-            backgroundColor: colors.backdrop,
+            backgroundColor: colors.surface,
             padding: 10,
           }}
           source={getDisplayIcon(props.item, screenshotModeEnabled)}

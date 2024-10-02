@@ -15,7 +15,7 @@ export default function Countdown({ timestamp }: props) {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [timestamp]);
 
   const days = Math.floor(diff / 1000 / 60 / 60 / 24);
   const hours = Math.floor(

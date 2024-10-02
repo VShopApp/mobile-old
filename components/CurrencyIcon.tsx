@@ -21,7 +21,7 @@ export default function CurrencyIcon(props: props) {
           <Image
             style={{ width: 22, height: 22, marginRight: 15 }}
             source={
-              props.icon == "vp"
+              props.icon === "vp"
                 ? require("~/assets/images/vp.png")
                 : require("~/assets/images/rad.png")
             }
@@ -32,7 +32,7 @@ export default function CurrencyIcon(props: props) {
         <Image
           style={{ width: 15, height: 15 }}
           source={
-            props.icon == "vp"
+            props.icon === "vp"
               ? require("~/assets/images/vp.png")
               : require("~/assets/images/rad.png")
           }

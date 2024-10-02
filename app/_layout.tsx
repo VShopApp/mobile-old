@@ -44,7 +44,7 @@ function RootLayout() {
       }
       SplashScreen.hideAsync();
     });
-  }, []);
+  }, [router]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

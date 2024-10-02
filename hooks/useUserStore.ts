@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { defaultUser } from "~/utils/ValorantAPI";
+import { defaultUser } from "~/utils/valorant-api";
 
 interface UserState {
   user: typeof defaultUser;

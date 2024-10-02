@@ -22,12 +22,12 @@ import {
   getUserId,
   getUsername,
   loadOffers,
-} from "~/utils/ValorantAPI";
+} from "~/utils/valorant-api";
 import Loading from "~/components/Loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUserStore } from "~/hooks/useUserStore";
 import { useFeatureStore } from "~/hooks/useFeatureStore";
-import { checkDonator } from "~/utils/VShopAPI";
+import { checkDonator } from "~/utils/vshop-api";
 import { useRouter } from "expo-router";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
@@ -262,7 +262,7 @@ function Setup() {
               setOffsetX(x);
             }}
             style={{ width: "50%" }}
-            disabled={Math.round(offsetX) == 0 || loading != null}
+            disabled={Math.round(offsetX) === 0 || loading != null}
           >
             {t("back")}
           </Button>
@@ -277,8 +277,8 @@ function Setup() {
             }}
             style={{ width: "50%" }}
             disabled={
-              Math.round(offsetX / windowWidth) == 2 ||
-              (Math.round(offsetX / windowWidth) == 1 &&
+              Math.round(offsetX / windowWidth) === 2 ||
+              (Math.round(offsetX / windowWidth) === 1 &&
                 user.region.length <= 0)
             }
           >
