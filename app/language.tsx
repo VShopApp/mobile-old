@@ -1,7 +1,7 @@
 import { useNavigation } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { langCodes } from "~/utils/localization";
 

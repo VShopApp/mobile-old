@@ -2,10 +2,7 @@ import { Drawer } from "expo-router/drawer";
 import { useTranslation } from "react-i18next";
 import { Image } from "expo-image";
 import { Platform, View } from "react-native";
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-} from "@react-navigation/drawer";
+import { DrawerItemList } from "@react-navigation/drawer";
 import { Appbar, Text, useTheme } from "react-native-paper";
 import * as Application from "expo-application";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
@@ -15,32 +12,31 @@ import DonatePopup from "~/components/popups/DonatePopup";
 function CustomDrawerContent(props: any) {
   return (
     <>
-      <DrawerContentScrollView {...props}>
-        <View
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          padding: 10,
+          paddingVertical: 20,
+        }}
+      >
+        <Image
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            padding: 10,
+            width: 50,
+            height: 50,
+            borderRadius: 10,
+            marginRight: 10,
           }}
-        >
-          <Image
-            style={{
-              width: 50,
-              height: 50,
-              borderRadius: 10,
-              marginRight: 10,
-            }}
-            source={require("~/assets/images/logo-50.png")}
-          />
-          <View>
-            <Text style={{ fontSize: 22, fontWeight: "bold" }}>VShop</Text>
-            <Text style={{ fontSize: 12 }}>
-              v{Application.nativeApplicationVersion}
-            </Text>
-          </View>
+          source={require("~/assets/images/logo-50.png")}
+        />
+        <View>
+          <Text style={{ fontSize: 22, fontWeight: "bold" }}>VShop</Text>
+          <Text style={{ fontSize: 12 }}>
+            v{Application.nativeApplicationVersion}
+          </Text>
         </View>
-        <DrawerItemList {...props} />
-      </DrawerContentScrollView>
+      </View>
+      <DrawerItemList {...props} />
     </>
   );
 }

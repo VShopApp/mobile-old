@@ -1,6 +1,5 @@
 import React from "react";
-import { View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, View } from "react-native";
 import { Avatar, List, Text } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { useUserStore } from "~/hooks/useUserStore";
