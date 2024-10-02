@@ -45,6 +45,12 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "ac45f951-5b85-4ba9-85e4-fa80e892f9e0"
+      }
+    },
+    "owner": "the_vasc"
   }
 }
