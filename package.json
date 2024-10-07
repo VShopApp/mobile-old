@@ -52,6 +52,7 @@
     "i18next-resources-to-backend": "^1.2.1",
     "jwt-decode": "^4.0.0",
     "posthog-react-native": "^3.3.0",
+    "posthog-react-native-session-replay": "^0.1.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "^15.0.2",

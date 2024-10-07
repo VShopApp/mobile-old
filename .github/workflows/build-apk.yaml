@@ -1,8 +1,6 @@
 on:
   workflow_dispatch:
   push:
-    tags:
-      - "v*"
 
 name: Build apk
 jobs:
@@ -44,6 +42,8 @@ jobs:
         env:
           EXPO_PUBLIC_API_URL: ${{ secrets.API_URL }}
           EXPO_PUBLIC_STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+          EXPO_PUBLIC_POSTHOG_HOST: ${{ secrets.POSTHOG_HOST }}
+          EXPO_PUBLIC_POSTHOG_API_KEY: ${{ secrets.POSTHOG_API_KEY }}
 
       - name: Upload Artifact GitHub Action
         uses: actions/upload-artifact@v3

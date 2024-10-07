@@ -8,122 +8,20 @@ import {
   Title,
   useTheme,
 } from "react-native-paper";
-import WebView from "react-native-webview";
 import { Image } from "expo-image";
-import { getAccessTokenFromUri, regions } from "~/utils/misc";
-import {
-  loadSkins,
-  loadVersion,
-  getProgress,
-  getBalances,
-  getEntitlementsToken,
-  getShop,
-  parseShop,
-  getUserId,
-  getUsername,
-  loadOffers,
-} from "~/utils/valorant-api";
-import Loading from "~/components/Loading";
+import { regions } from "~/utils/misc";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useUserStore } from "~/hooks/useUserStore";
-import { useFeatureStore } from "~/hooks/useFeatureStore";
-import { checkDonator } from "~/utils/vshop-api";
-import { useRouter } from "expo-router";
+import LoginWebView from "~/components/LoginWebView";
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get("window");
-const LOGIN_URL =
-  "https://auth.riotgames.com/authorize?redirect_uri=https%3A%2F%2Fplayvalorant.com%2Fopt_in&client_id=play-valorant-web-prod&response_type=token%20id_token&nonce=1&scope=account%20openid";
 
 function Setup() {
   const scrollViewRef = useRef<ScrollView>(null);
   const [offsetX, setOffsetX] = useState(0);
   const { t } = useTranslation();
   const { user, setUser } = useUserStore();
-  const { enableDonator, disableDonator } = useFeatureStore();
-  const [loading, setLoading] = useState<string | null>(null);
-  const router = useRouter();
   const { colors } = useTheme();
-
-  const handleWebViewChange = async (newNavState: {
-    url?: string;
-    title?: string;
-    loading?: boolean;
-    canGoBack?: boolean;
-    canGoForward?: boolean;
-  }) => {
-    if (!newNavState.url) return;
-
-    if (newNavState.url.includes("access_token=")) {
-      const accessToken = getAccessTokenFromUri(newNavState.url);
-      try {
-        setLoading(t("fetching.version"));
-        await loadVersion();
-
-        setLoading(t("fetching.skins"));
-        await loadSkins();
-
-        setLoading(t("fetching.entitlements_token"));
-        const entitlementsToken = await getEntitlementsToken(accessToken);
-
-        setLoading(t("fetching.user_id"));
-        const userId = getUserId(accessToken);
-
-        setLoading(t("fetching.username"));
-        const username = await getUsername(
-          accessToken,
-          entitlementsToken,
-          userId,
-          user.region
-        );
-
-        setLoading(t("fetching.offers"));
-        await loadOffers(accessToken, entitlementsToken, user.region);
-
-        setLoading(t("fetching.storefront"));
-        const shop = await getShop(
-          accessToken,
-          entitlementsToken,
-          user.region,
-          userId
-        );
-        const shops = await parseShop(shop);
-
-        setLoading(t("fetching.progress"));
-        const progress = await getProgress(
-          accessToken,
-          entitlementsToken,
-          user.region,
-          userId
-        );
-
-        setLoading(t("fetching.balances"));
-        const balances = await getBalances(
-          accessToken,
-          entitlementsToken,
-          user.region,
-          userId
-        );
-
-        setLoading(t("fetching.donator"));
-        const isDonator = await checkDonator(userId);
-        if (isDonator) enableDonator();
-        else disableDonator();
-
-        setUser({
-          id: userId,
-          name: username,
-          region: user.region,
-          shops,
-          progress,
-          balances,
-        });
-
-        router.replace("/shop");
-      } catch (e) {
-        console.log(e);
-      }
-    }
-  };
 
   return (
     <>
@@ -215,38 +113,7 @@ function Setup() {
                 {t("signin_info")}
               </Paragraph>
             </View>
-            {!loading ? (
-              <View
-                style={{
-                  height: "75%",
-                  width: windowWidth,
-                  paddingHorizontal: 15,
-                }}
-                renderToHardwareTextureAndroid
-              >
-                <WebView
-                  userAgent="Mozilla/5.0 (Linux; Android) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.125 Mobile Safari/537.36"
-                  source={{
-                    uri: LOGIN_URL,
-                  }}
-                  onNavigationStateChange={handleWebViewChange}
-                  injectedJavaScriptBeforeContentLoaded={`(function() {
-                    const deleteSignUp = () => {
-                      if (document.getElementsByClassName('signup-link').length > 0) document.getElementsByClassName('signup-link')[0].remove();
-                      else setTimeout(deleteSignUp, 10)
-                    }
-                    const deleteCookieBanner = () => {
-                      if (document.getElementsByClassName('osano-cm-window').length > 0) document.getElementsByClassName('osano-cm-window')[0].style = "display:none;";
-                      else setTimeout(deleteCookieBanner, 10)
-                    }
-                    deleteCookieBanner();
-                    deleteSignUp();
-                  })();`}
-                />
-              </View>
-            ) : (
-              <Loading msg={loading} />
-            )}
+            <LoginWebView />
           </View>
         )}
       </ScrollView>
@@ -262,7 +129,7 @@ function Setup() {
               setOffsetX(x);
             }}
             style={{ width: "50%" }}
-            disabled={Math.round(offsetX) === 0 || loading != null}
+            disabled={Math.round(offsetX) === 0}
           >
             {t("back")}
           </Button>

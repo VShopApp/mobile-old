@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SplashScreen } from "expo-router";
 import { useTranslation } from "react-i18next";
+import { SharedPostHogProvider } from "~/components/Posthog";
 
 export const CombinedDarkTheme = {
   ...merge(PaperDarkTheme, NavigationDarkTheme),
@@ -48,49 +49,51 @@ function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <SafeAreaView
-        style={{ backgroundColor: CombinedDarkTheme.colors.primary }}
-      />
-      <PaperProvider theme={CombinedDarkTheme}>
-        <StripeProvider
-          publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLIC_KEY ?? ""}
-        >
-          <ThemeProvider value={CombinedDarkTheme}>
-            <Stack
-              screenOptions={{
-                headerStyle: {
-                  backgroundColor: CombinedDarkTheme.colors.primary,
-                },
-                headerTintColor: "#fff",
-                header: ({ options, navigation }) => (
-                  <Appbar.Header
-                    style={{
-                      backgroundColor: CombinedDarkTheme.colors.primary,
-                    }}
-                  >
-                    <Appbar.BackAction onPress={navigation.goBack} />
-                    <Appbar.Content title={options.title} />
-                  </Appbar.Header>
-                ),
-                gestureEnabled: false,
-              }}
-            >
-              <Stack.Screen name="index" options={{ headerShown: false }} />
-              <Stack.Screen name="reauth" options={{ headerShown: false }} />
-              <Stack.Screen name="setup" options={{ headerShown: false }} />
-              <Stack.Screen
-                name="language"
-                options={{ presentation: "modal", title: t("language") }}
-              />
-              <Stack.Screen
-                name="(authenticated)"
-                options={{ headerShown: false }}
-              />
-            </Stack>
-            {Platform.OS === "android" && <UpdatePopup />}
-          </ThemeProvider>
-        </StripeProvider>
-      </PaperProvider>
+      <SharedPostHogProvider>
+        <SafeAreaView
+          style={{ backgroundColor: CombinedDarkTheme.colors.primary }}
+        />
+        <PaperProvider theme={CombinedDarkTheme}>
+          <StripeProvider
+            publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLIC_KEY ?? ""}
+          >
+            <ThemeProvider value={CombinedDarkTheme}>
+              <Stack
+                screenOptions={{
+                  headerStyle: {
+                    backgroundColor: CombinedDarkTheme.colors.primary,
+                  },
+                  headerTintColor: "#fff",
+                  header: ({ options, navigation }) => (
+                    <Appbar.Header
+                      style={{
+                        backgroundColor: CombinedDarkTheme.colors.primary,
+                      }}
+                    >
+                      <Appbar.BackAction onPress={navigation.goBack} />
+                      <Appbar.Content title={options.title} />
+                    </Appbar.Header>
+                  ),
+                  gestureEnabled: false,
+                }}
+              >
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="reauth" options={{ headerShown: false }} />
+                <Stack.Screen name="setup" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="language"
+                  options={{ presentation: "modal", title: t("language") }}
+                />
+                <Stack.Screen
+                  name="(authenticated)"
+                  options={{ headerShown: false }}
+                />
+              </Stack>
+              {Platform.OS === "android" && <UpdatePopup />}
+            </ThemeProvider>
+          </StripeProvider>
+        </PaperProvider>
+      </SharedPostHogProvider>
     </GestureHandlerRootView>
   );
 }

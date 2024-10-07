@@ -16,6 +16,7 @@ import { Platform } from "react-native";
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
 import * as Network from "expo-network";
+import { posthog } from "~/components/Posthog";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -45,6 +46,7 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
 
     await checkShop();
 
+    posthog.capture("wishlist_check");
     return BackgroundFetch.BackgroundFetchResult.NewData;
   }
 

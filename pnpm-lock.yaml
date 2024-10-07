@@ -112,7 +112,10 @@ importers:
         version: 4.0.0
       posthog-react-native:
         specifier: ^3.3.0
-        version: 3.3.0(@react-native-async-storage/async-storage@1.23.1(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0)))(@react-navigation/native@6.1.18(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(expo-application@5.9.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-device@6.0.2(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-file-system@17.0.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-localization@15.0.3(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))
+        version: 3.3.0(@react-native-async-storage/async-storage@1.23.1(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0)))(@react-navigation/native@6.1.18(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(expo-application@5.9.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-device@6.0.2(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-file-system@17.0.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-localization@15.0.3(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(posthog-react-native-session-replay@0.1.2(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))
+      posthog-react-native-session-replay:
+        specifier: ^0.1.2
+        version: 0.1.2(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
       react:
         specifier: 18.2.0
         version: 18.2.0
@@ -4400,6 +4403,12 @@ packages:
   postcss@8.4.47:
     resolution: {integrity: sha512-56rxCq7G/XfB4EkXq9Egn5GCqugWvDFjafDOThIdMBsI15iqPqR5r15TfSr1YPYeEI19YeaXMCbY6u88Y76GLQ==}
     engines: {node: ^10 || ^12 || >=14}
+
+  posthog-react-native-session-replay@0.1.2:
+    resolution: {integrity: sha512-UeVZjO0XHBBQ3LY8kz37dXEkHiD93GkIs2NgYAkjnfT/kEqW29N3RRvVdS4dSqfCJejijCN2YjxrHx949oALDw==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
 
   posthog-react-native@3.3.0:
     resolution: {integrity: sha512-qz2oH/G8I51WZmeFITSiXubQREIYhhHsBUIKQGv0RLK1s5LbNXshyyWF6iE/d+bnhnsGKtl3/IWlOD2g7LL0TQ==}
@@ -11393,7 +11402,12 @@ snapshots:
       picocolors: 1.1.0
       source-map-js: 1.2.1
 
-  posthog-react-native@3.3.0(@react-native-async-storage/async-storage@1.23.1(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0)))(@react-navigation/native@6.1.18(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(expo-application@5.9.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-device@6.0.2(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-file-system@17.0.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-localization@15.0.3(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))):
+  posthog-react-native-session-replay@0.1.2(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0)
+
+  posthog-react-native@3.3.0(@react-native-async-storage/async-storage@1.23.1(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0)))(@react-navigation/native@6.1.18(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0))(expo-application@5.9.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-device@6.0.2(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-file-system@17.0.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(expo-localization@15.0.3(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))))(posthog-react-native-session-replay@0.1.2(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)):
     optionalDependencies:
       '@react-native-async-storage/async-storage': 1.23.1(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))
       '@react-navigation/native': 6.1.18(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
@@ -11401,6 +11415,7 @@ snapshots:
       expo-device: 6.0.2(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       expo-file-system: 17.0.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       expo-localization: 15.0.3(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
+      posthog-react-native-session-replay: 0.1.2(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
 
   prelude-ls@1.2.1: {}
 

@@ -180,7 +180,7 @@ function Settings() {
         </TouchableRipple>
       </List.Section>
       <List.Section title={t("account")}>
-        <TouchableRipple onPress={() => Clipboard.setString(user.id)}>
+        <TouchableRipple onPress={() => Clipboard.setStringAsync(user.id)}>
           <List.Item
             title={t("copy_riot_id")}
             left={(props) => <List.Icon {...props} icon="content-copy" />}
