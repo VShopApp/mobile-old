@@ -31,6 +31,8 @@ const BACKGROUND_FETCH_TASK = "wishlist_check";
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   if (Platform.OS !== "android") return;
 
+  posthog.capture("wishlist_check");
+
   const lastWishlistCheckTs = Number.parseInt(
     (await AsyncStorage.getItem("lastWishlistCheck")) || "0"
   );
@@ -46,7 +48,6 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
 
     await checkShop();
 
-    posthog.capture("wishlist_check");
     return BackgroundFetch.BackgroundFetchResult.NewData;
   }
 
