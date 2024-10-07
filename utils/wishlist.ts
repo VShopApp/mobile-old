@@ -27,6 +27,7 @@ Notifications.setNotificationHandler({
 });
 
 const BACKGROUND_FETCH_TASK = "wishlist_check";
+const NOTIFICATION_CHANNEL = "wishlist";
 
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   console.log("Executing VShop wishlist background task");
@@ -80,9 +81,9 @@ export async function isWishlistCheckRegistered() {
 }
 
 export async function checkShop() {
-  await Notifications.setNotificationChannelAsync("wishlist", {
+  await Notifications.setNotificationChannelAsync(NOTIFICATION_CHANNEL, {
     name: "Wishlist",
-    importance: Notifications.AndroidImportance.DEFAULT,
+    importance: Notifications.AndroidImportance.MAX,
   });
 
   try {
@@ -122,7 +123,10 @@ export async function checkShop() {
               displayname: skinData.data.data.displayName,
             }),
           },
-          trigger: null,
+          trigger: {
+            channelId: NOTIFICATION_CHANNEL,
+            seconds: 1,
+          },
         });
         hit = true;
       }
@@ -133,7 +137,10 @@ export async function checkShop() {
           title: i18n.t("wishlist.name"),
           body: i18n.t("wishlist.notification.no_hit"),
         },
-        trigger: null,
+        trigger: {
+          channelId: NOTIFICATION_CHANNEL,
+          seconds: 1,
+        },
       });
     }
   } catch (e) {
@@ -143,7 +150,10 @@ export async function checkShop() {
         title: i18n.t("wishlist.name"),
         body: i18n.t("wishlist.notification.error"),
       },
-      trigger: null,
+      trigger: {
+        channelId: NOTIFICATION_CHANNEL,
+        seconds: 1,
+      },
     });
   }
 }

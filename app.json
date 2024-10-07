@@ -21,7 +21,7 @@
         "backgroundColor": "#fa4454"
       },
       "package": "dev.vasc.vshop2",
-      "versionCode": 61
+      "versionCode": 62
     },
     "web": {
       "bundler": "metro",
