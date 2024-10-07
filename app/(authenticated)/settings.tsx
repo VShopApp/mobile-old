@@ -18,6 +18,7 @@ import {
   unregisterWishlistCheck,
 } from "~/utils/wishlist";
 import * as Notifications from "expo-notifications";
+import { usePostHog } from "posthog-react-native";
 
 function Settings() {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ function Settings() {
   const { isDonator, screenshotModeEnabled, toggleScreenshotMode } =
     useFeatureStore();
   const { showDonatePopup } = useDonatePopupStore();
+  const posthog = usePostHog();
 
   const [isRegistered, setIsRegistered] = useState(false);
 
@@ -37,6 +39,7 @@ function Settings() {
     await CookieManager.clearAll(true);
     await AsyncStorage.removeItem("region");
     setUser(defaultUser);
+    posthog.reset();
     router.replace("/setup");
   };
 

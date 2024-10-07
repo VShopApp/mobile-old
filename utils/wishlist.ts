@@ -29,8 +29,7 @@ Notifications.setNotificationHandler({
 const BACKGROUND_FETCH_TASK = "wishlist_check";
 
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-  if (Platform.OS !== "android") return;
-
+  console.log("Executing VShop wishlist background task");
   posthog.capture("wishlist_check");
 
   const lastWishlistCheckTs = Number.parseInt(
@@ -38,7 +37,12 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   );
   const lastWishlistCheck = new Date(lastWishlistCheckTs);
   const now = new Date();
+  console.log(
+    `Last wishlist check ${lastWishlistCheck}, current date: ${now.getTime()}`
+  );
+
   const networkStatus = await Network.getNetworkStateAsync();
+  console.log(`Is internet reachable: ${networkStatus.isInternetReachable}`);
 
   if (
     (!isSameDayUTC(lastWishlistCheck, now) || lastWishlistCheckTs === 0) &&
@@ -46,6 +50,7 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   ) {
     await AsyncStorage.setItem("lastWishlistCheck", now.getTime().toString());
 
+    console.log("New day, checking shop in the background");
     await checkShop();
 
     return BackgroundFetch.BackgroundFetchResult.NewData;
