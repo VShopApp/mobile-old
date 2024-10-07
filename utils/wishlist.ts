@@ -1,4 +1,4 @@
-import { getAccessTokenFromUri, getVAPILang } from "./misc";
+import { getAccessTokenFromUri, getVAPILang, isSameDayUTC } from "./misc";
 import {
   getEntitlementsToken,
   getShop,
@@ -15,33 +15,40 @@ import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import * as BackgroundFetch from "expo-background-fetch";
 import * as TaskManager from "expo-task-manager";
+import * as Network from "expo-network";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 const BACKGROUND_FETCH_TASK = "wishlist_check";
 
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
   if (Platform.OS !== "android") return;
 
-  const now = Date.now();
-
-  console.log(
-    `Got background fetch call at date: ${new Date(now).toISOString()}`
-  );
-
-  const lastWishlistCheck = Number.parseInt(
+  const lastWishlistCheckTs = Number.parseInt(
     (await AsyncStorage.getItem("lastWishlistCheck")) || "0"
   );
-  const lastCheckedMs = new Date().getTime() - lastWishlistCheck;
+  const lastWishlistCheck = new Date(lastWishlistCheckTs);
+  const now = new Date();
+  const networkStatus = await Network.getNetworkStateAsync();
 
-  if (60 * 1000 < lastCheckedMs || lastWishlistCheck === 0) {
-    await AsyncStorage.setItem(
-      "lastWishlistCheck",
-      new Date().getTime().toString()
-    );
+  if (
+    (!isSameDayUTC(lastWishlistCheck, now) || lastWishlistCheckTs === 0) &&
+    networkStatus.isInternetReachable
+  ) {
+    await AsyncStorage.setItem("lastWishlistCheck", now.getTime().toString());
 
     await checkShop();
+
+    return BackgroundFetch.BackgroundFetchResult.NewData;
   }
 
-  return BackgroundFetch.BackgroundFetchResult.NewData;
+  return BackgroundFetch.BackgroundFetchResult.NoData;
 });
 
 export async function registerWishlistCheck() {
@@ -64,7 +71,7 @@ export async function isWishlistCheckRegistered() {
   return TaskManager.isTaskRegisteredAsync(BACKGROUND_FETCH_TASK);
 }
 
-async function checkShop() {
+export async function checkShop() {
   await Notifications.setNotificationChannelAsync("wishlist", {
     name: "Wishlist",
     importance: Notifications.AndroidImportance.DEFAULT,

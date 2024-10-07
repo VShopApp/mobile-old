@@ -12,6 +12,7 @@ import { defaultUser } from "~/utils/valorant-api";
 import * as Clipboard from "expo-clipboard";
 import { useRouter } from "expo-router";
 import {
+  checkShop,
   isWishlistCheckRegistered,
   registerWishlistCheck,
   unregisterWishlistCheck,
@@ -205,6 +206,14 @@ function Settings() {
                   status={screenshotModeEnabled ? "checked" : "unchecked"}
                   onPress={toggleScreenshotMode}
                 />
+              )}
+            />
+          </TouchableRipple>
+          <TouchableRipple onPress={() => checkShop()}>
+            <List.Item
+              title="Wishlist notification test"
+              left={(props) => (
+                <List.Icon {...props} icon="cellphone-message" />
               )}
             />
           </TouchableRipple>

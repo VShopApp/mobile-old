@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#fa4454"
     },
     "ios": {
       "supportsTablet": true
@@ -20,7 +20,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#fa4454"
       },
-      "package": "dev.vasc.vshop2"
+      "package": "dev.vasc.vshop2",
+      "versionCode": 59
     },
     "web": {
       "bundler": "metro",
