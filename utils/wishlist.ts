@@ -57,6 +57,8 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
     return BackgroundFetch.BackgroundFetchResult.NewData;
   }
 
+  console.log("No wishlist check needed");
+
   return BackgroundFetch.BackgroundFetchResult.NoData;
 });
 
@@ -64,7 +66,7 @@ export async function registerWishlistCheck() {
   if (Platform.OS !== "android") return;
 
   return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-    minimumInterval: 60 * 15,
+    minimumInterval: 60,
     stopOnTerminate: false,
     startOnBoot: true,
   });
