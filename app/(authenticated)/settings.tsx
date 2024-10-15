@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Checkbox, List, Text, TouchableRipple } from "react-native-paper";
 import { useTranslation } from "react-i18next";
 import { Linking, ToastAndroid, ScrollView } from "react-native";
@@ -11,14 +11,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { defaultUser } from "~/utils/valorant-api";
 import * as Clipboard from "expo-clipboard";
 import { useRouter } from "expo-router";
-import {
-  checkShop,
-  isWishlistCheckRegistered,
-  registerWishlistCheck,
-  unregisterWishlistCheck,
-} from "~/utils/wishlist";
+import { checkShop } from "~/utils/wishlist";
 import * as Notifications from "expo-notifications";
 import { usePostHog } from "posthog-react-native";
+import { useWishlistStore } from "~/hooks/useWishlistStore";
 
 function Settings() {
   const { t } = useTranslation();
@@ -26,14 +22,15 @@ function Settings() {
   const { user, setUser } = useUserStore();
   const { isDonator, screenshotModeEnabled, toggleScreenshotMode } =
     useFeatureStore();
+  const notificationEnabled = useWishlistStore(
+    (state) => state.notificationEnabled
+  );
+  const setNotificationEnabled = useWishlistStore(
+    (state) => state.setNotificationEnabled
+  );
+  const wishlistedSkins = useWishlistStore((state) => state.skinIds);
   const { showDonatePopup } = useDonatePopupStore();
   const posthog = usePostHog();
-
-  const [isRegistered, setIsRegistered] = useState(false);
-
-  useEffect(() => {
-    checkWishlistCheckStatus();
-  }, []);
 
   const handleLogout = async () => {
     await CookieManager.clearAll(true);
@@ -45,10 +42,10 @@ function Settings() {
 
   const toggleNotificationEnabled = async () => {
     if (isDonator) {
-      if (!isRegistered) {
+      if (!notificationEnabled) {
         const permission = await Notifications.requestPermissionsAsync();
         if (permission.granted) {
-          await registerWishlistCheck();
+          setNotificationEnabled(true);
           ToastAndroid.show(
             t("wishlist.notification.enabled"),
             ToastAndroid.LONG
@@ -60,22 +57,15 @@ function Settings() {
           );
         }
       } else {
-        await unregisterWishlistCheck();
+        setNotificationEnabled(false);
         ToastAndroid.show(
           t("wishlist.notification.disabled"),
           ToastAndroid.LONG
         );
       }
-
-      await checkWishlistCheckStatus();
     } else {
       showDonatePopup();
     }
-  };
-
-  const checkWishlistCheckStatus = async () => {
-    const isRegistered = await isWishlistCheckRegistered();
-    setIsRegistered(isRegistered);
   };
 
   const showLastExecution = async () => {
@@ -122,7 +112,7 @@ function Settings() {
                 )}
                 right={() => (
                   <Checkbox
-                    status={isRegistered ? "checked" : "unchecked"}
+                    status={notificationEnabled ? "checked" : "unchecked"}
                     onPress={toggleNotificationEnabled}
                   />
                 )}
@@ -212,7 +202,7 @@ function Settings() {
               )}
             />
           </TouchableRipple>
-          <TouchableRipple onPress={() => checkShop()}>
+          <TouchableRipple onPress={() => checkShop(wishlistedSkins)}>
             <List.Item
               title="Wishlist notification test"
               left={(props) => (

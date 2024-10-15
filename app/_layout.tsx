@@ -19,6 +19,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SplashScreen } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SharedPostHogProvider } from "~/components/Posthog";
+import { initBackgroundFetch } from "~/utils/wishlist";
 
 export const CombinedDarkTheme = {
   ...merge(PaperDarkTheme, NavigationDarkTheme),
@@ -36,6 +37,8 @@ function RootLayout() {
   const { t } = useTranslation();
 
   useEffect(() => {
+    initBackgroundFetch();
+
     // If user has set the region, he *should* be a returning user
     AsyncStorage.getItem("region").then((region) => {
       if (region) {

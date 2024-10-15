@@ -12,10 +12,7 @@ import i18n from "./localization";
 import { checkDonator } from "./vshop-api";
 import { useWishlistStore } from "~/hooks/useWishlistStore";
 import * as Notifications from "expo-notifications";
-import { Platform } from "react-native";
-import * as BackgroundFetch from "expo-background-fetch";
-import * as TaskManager from "expo-task-manager";
-import * as Network from "expo-network";
+import BackgroundFetch from "react-native-background-fetch";
 import { posthog } from "~/components/Posthog";
 
 Notifications.setNotificationHandler({
@@ -26,11 +23,14 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const BACKGROUND_FETCH_TASK = "wishlist_check";
 const NOTIFICATION_CHANNEL = "wishlist";
 
-TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-  console.log("Executing VShop wishlist background task");
+export async function wishlistBgTask() {
+  await useWishlistStore.persist.rehydrate();
+  const wishlistStore = useWishlistStore.getState();
+
+  if (!wishlistStore.notificationEnabled) return;
+
   posthog.capture("wishlist_check");
 
   const lastWishlistCheckTs = Number.parseInt(
@@ -42,47 +42,17 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
     `Last wishlist check ${lastWishlistCheck}, current date: ${now.getTime()}`
   );
 
-  const networkStatus = await Network.getNetworkStateAsync();
-  console.log(`Is internet reachable: ${networkStatus.isInternetReachable}`);
-
-  if (
-    (!isSameDayUTC(lastWishlistCheck, now) || lastWishlistCheckTs === 0) &&
-    networkStatus.isInternetReachable
-  ) {
+  if (!isSameDayUTC(lastWishlistCheck, now) || lastWishlistCheckTs === 0) {
     await AsyncStorage.setItem("lastWishlistCheck", now.getTime().toString());
 
     console.log("New day, checking shop in the background");
-    await checkShop();
-
-    return BackgroundFetch.BackgroundFetchResult.NewData;
+    await checkShop(wishlistStore.skinIds);
   }
 
   console.log("No wishlist check needed");
-
-  return BackgroundFetch.BackgroundFetchResult.NoData;
-});
-
-export async function registerWishlistCheck() {
-  if (Platform.OS !== "android") return;
-
-  return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-    minimumInterval: 60,
-    stopOnTerminate: false,
-    startOnBoot: true,
-  });
 }
 
-export async function unregisterWishlistCheck() {
-  if (Platform.OS !== "android") return;
-
-  return BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
-}
-
-export async function isWishlistCheckRegistered() {
-  return TaskManager.isTaskRegisteredAsync(BACKGROUND_FETCH_TASK);
-}
-
-export async function checkShop() {
+export async function checkShop(wishlist: string[]) {
   await Notifications.setNotificationChannelAsync(NOTIFICATION_CHANNEL, {
     name: "Wishlist",
     importance: Notifications.AndroidImportance.MAX,
@@ -103,9 +73,6 @@ export async function checkShop() {
     const entitlementsToken = await getEntitlementsToken(accessToken);
     const region = (await AsyncStorage.getItem("region")) || "eu";
     const shop = await getShop(accessToken, entitlementsToken, region, userId);
-
-    await useWishlistStore.persist.rehydrate();
-    const wishlist = useWishlistStore.getState().skinIds;
 
     var hit = false;
     for (let i = 0; i < wishlist.length; i++) {
@@ -158,4 +125,30 @@ export async function checkShop() {
       },
     });
   }
+}
+
+export async function initBackgroundFetch() {
+  await BackgroundFetch.configure(
+    {
+      minimumFetchInterval: 15,
+      stopOnTerminate: false,
+      enableHeadless: true,
+      startOnBoot: true,
+      // Android options
+      forceAlarmManager: false,
+      requiredNetworkType: BackgroundFetch.NETWORK_TYPE_ANY,
+      requiresCharging: false,
+      requiresDeviceIdle: false,
+      requiresBatteryNotLow: false,
+      requiresStorageNotLow: false,
+    },
+    async (taskId: string) => {
+      await wishlistBgTask();
+      BackgroundFetch.finish(taskId);
+    },
+    (taskId: string) => {
+      console.log("[Fetch] TIMEOUT taskId:", taskId);
+      BackgroundFetch.finish(taskId);
+    }
+  );
 }

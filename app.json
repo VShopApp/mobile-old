@@ -21,7 +21,7 @@
         "backgroundColor": "#fa4454"
       },
       "package": "dev.vasc.vshop2",
-      "versionCode": 63
+      "versionCode": 64
     },
     "web": {
       "bundler": "metro",
@@ -42,7 +42,8 @@
           "icon": "./assets/images/notification-icon.png",
           "color": "#fa4454"
         }
-      ]
+      ],
+      "react-native-background-fetch"
     ],
     "experiments": {
       "typedRoutes": true

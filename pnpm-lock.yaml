@@ -47,9 +47,6 @@ importers:
       expo-av:
         specifier: ~14.0.7
         version: 14.0.7(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
-      expo-background-fetch:
-        specifier: ~12.0.1
-        version: 12.0.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
       expo-clipboard:
         specifier: ~6.0.3
         version: 6.0.3(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
@@ -128,6 +125,9 @@ importers:
       react-native:
         specifier: 0.74.5
         version: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0)
+      react-native-background-fetch:
+        specifier: ^4.2.5
+        version: 4.2.5
       react-native-gesture-handler:
         specifier: ~2.16.2
         version: 2.16.2(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0)
@@ -2708,11 +2708,6 @@ packages:
     peerDependencies:
       expo: '*'
 
-  expo-background-fetch@12.0.1:
-    resolution: {integrity: sha512-8915rCoRKWBwCkhSSowv2+kH+QV6YYR7ES8r+yWAUPQ0vq+26NojeWAZtR0vCyTW+QLsQrYVV5Eh0brpZIMS7w==}
-    peerDependencies:
-      expo: '*'
-
   expo-clipboard@6.0.3:
     resolution: {integrity: sha512-RIKDsuHkYfaspifbFpVC8sBVFKR05L7Pj7mU2/XkbrW9m01OBNvdpGraXEMsTFCx97xMGsZpEw9pPquL4j4xVg==}
     peerDependencies:
@@ -2836,11 +2831,6 @@ packages:
 
   expo-system-ui@3.0.7:
     resolution: {integrity: sha512-KAs72F5JKhdIfPR9ZNVlRubTPK9uUuevPy5oYEp12xNEzSQcjZKvypH5NpwJuNWkXzrp3n3vZ+3pXsudA7J3KA==}
-    peerDependencies:
-      expo: '*'
-
-  expo-task-manager@11.8.2:
-    resolution: {integrity: sha512-Uhy3ol5gYeZOyeRFddYjLI1B2DGRH1gjp/YC8Hpn5p5MVENviySoKNF+wd98rRvOAokzrzElyDBHSTfX+C3tpg==}
     peerDependencies:
       expo: '*'
 
@@ -4574,6 +4564,9 @@ packages:
   react-is@18.3.1:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
 
+  react-native-background-fetch@4.2.5:
+    resolution: {integrity: sha512-llOU+UWPd1fjOFGNGB4v4YrYaA0sMLn5hMk0aNx0Ok9+wQ2nQillVwj7G/XZEpIiD2vTVkntTNNXWycF5Ju0kQ==}
+
   react-native-gesture-handler@2.16.2:
     resolution: {integrity: sha512-vGFlrDKlmyI+BT+FemqVxmvO7nqxU33cgXVsn6IKAFishvlG3oV2Ds67D5nPkHMea8T+s1IcuMm0bF8ntZtAyg==}
     peerDependencies:
@@ -5363,9 +5356,6 @@ packages:
   unicode-property-aliases-ecmascript@2.1.0:
     resolution: {integrity: sha512-6t3foTQI9qne+OZoVQB/8x8rk2k1eVy1gRXhV3oFQ5T6R1dqQ1xtin3XqSlx3+ATBkliTaR/hHyJBm+LVPNM8w==}
     engines: {node: '>=4'}
-
-  unimodules-app-loader@4.6.0:
-    resolution: {integrity: sha512-FRNIlx7sLBDVPG117JnEBhnzZkTIgZTEwYW2rzrY9HdvLBTpRN+k0dxY50U/CAhFHW3zMD0OP5JAlnSQRhx5HA==}
 
   unique-filename@3.0.0:
     resolution: {integrity: sha512-afXhuC55wkAmZ0P18QsVE6kp8JaxrEokN2HGIoIVv2ijHQd419H0+6EigAFcIzXeMIkcIkNBpB3L/DXB3cTS/g==}
@@ -9310,11 +9300,6 @@ snapshots:
     dependencies:
       expo: 51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
 
-  expo-background-fetch@12.0.1(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
-    dependencies:
-      expo: 51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
-      expo-task-manager: 11.8.2(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2)))
-
   expo-clipboard@6.0.3(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
     dependencies:
       expo: 51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
@@ -9492,11 +9477,6 @@ snapshots:
       expo: 51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
     transitivePeerDependencies:
       - supports-color
-
-  expo-task-manager@11.8.2(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
-    dependencies:
-      expo: 51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))
-      unimodules-app-loader: 4.6.0
 
   expo-updates-interface@0.16.2(expo@51.0.36(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))):
     dependencies:
@@ -11547,6 +11527,8 @@ snapshots:
 
   react-is@18.3.1: {}
 
+  react-native-background-fetch@4.2.5: {}
+
   react-native-gesture-handler@2.16.2(react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4(@babel/core@7.25.2))(@types/react@18.2.79)(react@18.2.0))(react@18.2.0):
     dependencies:
       '@egjs/hammerjs': 2.0.17
@@ -12451,8 +12433,6 @@ snapshots:
   unicode-match-property-value-ecmascript@2.2.0: {}
 
   unicode-property-aliases-ecmascript@2.1.0: {}
-
-  unimodules-app-loader@4.6.0: {}
 
   unique-filename@3.0.0:
     dependencies:

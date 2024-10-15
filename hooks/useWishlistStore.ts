@@ -3,12 +3,17 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
 interface WishlistState {
+  notificationEnabled: boolean;
+  setNotificationEnabled: (value: boolean) => void;
   skinIds: string[];
   toggleSkin: (uuid: string) => void;
 }
 export const useWishlistStore = create<WishlistState>()(
   persist(
     (set, get) => ({
+      notificationEnabled: false,
+      setNotificationEnabled: (value: boolean) =>
+        set({ notificationEnabled: value }),
       skinIds: [],
       toggleSkin: (uuid: string) =>
         set({
