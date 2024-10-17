@@ -11,7 +11,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { defaultUser } from "~/utils/valorant-api";
 import * as Clipboard from "expo-clipboard";
 import { useRouter } from "expo-router";
-import { checkShop } from "~/utils/wishlist";
+import {
+  checkShop,
+  initBackgroundFetch,
+  stopBackgroundFetch,
+} from "~/utils/wishlist";
 import * as Notifications from "expo-notifications";
 import { usePostHog } from "posthog-react-native";
 import { useWishlistStore } from "~/hooks/useWishlistStore";
@@ -36,6 +40,8 @@ function Settings() {
     await CookieManager.clearAll(true);
     await AsyncStorage.removeItem("region");
     setUser(defaultUser);
+    stopBackgroundFetch();
+    setNotificationEnabled(false);
     posthog.reset();
     router.replace("/setup");
   };
@@ -45,6 +51,7 @@ function Settings() {
       if (!notificationEnabled) {
         const permission = await Notifications.requestPermissionsAsync();
         if (permission.granted) {
+          await initBackgroundFetch();
           setNotificationEnabled(true);
           ToastAndroid.show(
             t("wishlist.notification.enabled"),
@@ -57,6 +64,7 @@ function Settings() {
           );
         }
       } else {
+        await stopBackgroundFetch();
         setNotificationEnabled(false);
         ToastAndroid.show(
           t("wishlist.notification.disabled"),

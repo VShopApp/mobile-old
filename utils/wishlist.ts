@@ -152,3 +152,7 @@ export async function initBackgroundFetch() {
     }
   );
 }
+
+export async function stopBackgroundFetch() {
+  await BackgroundFetch.stop();
+}

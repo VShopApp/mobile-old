@@ -19,7 +19,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SplashScreen } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { SharedPostHogProvider } from "~/components/Posthog";
-import { initBackgroundFetch } from "~/utils/wishlist";
+import { initBackgroundFetch, stopBackgroundFetch } from "~/utils/wishlist";
+import { useWishlistStore } from "~/hooks/useWishlistStore";
 
 export const CombinedDarkTheme = {
   ...merge(PaperDarkTheme, NavigationDarkTheme),
@@ -37,7 +38,13 @@ function RootLayout() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    initBackgroundFetch();
+    // "Sync" background fetch with local state
+    const notificationEnabled = useWishlistStore.getState().notificationEnabled;
+    if (notificationEnabled) {
+      initBackgroundFetch();
+    } else {
+      stopBackgroundFetch();
+    }
 
     // If user has set the region, he *should* be a returning user
     AsyncStorage.getItem("region").then((region) => {

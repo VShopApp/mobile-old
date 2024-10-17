@@ -12,8 +12,9 @@ export const useWishlistStore = create<WishlistState>()(
   persist(
     (set, get) => ({
       notificationEnabled: false,
-      setNotificationEnabled: (value: boolean) =>
-        set({ notificationEnabled: value }),
+      setNotificationEnabled: (value) => {
+        set({ notificationEnabled: value });
+      },
       skinIds: [],
       toggleSkin: (uuid: string) =>
         set({
