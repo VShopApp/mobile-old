@@ -40,9 +40,9 @@ export default function DonatePopup() {
   const { t } = useTranslation();
   const { visible, hideDonatePopup } = useDonatePopupStore();
   const [currency, setCurrency] = useState<ICurrency>();
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState({ rawText: "", text: "" });
   const validAmount = currency
-    ? Number.parseFloat(amount) >= currency.minimum
+    ? Number.parseFloat(amount.text) >= currency.minimum
     : false;
   const { user } = useUserStore();
   const { initPaymentSheet, presentPaymentSheet } = useStripe();
@@ -51,7 +51,7 @@ export default function DonatePopup() {
 
   const initializePaymentSheet = async () => {
     const res = await generatePaymentSheet({
-      amount: Number.parseFloat(amount),
+      amount: Number.parseFloat(amount.text),
       riotId: user.id,
       currencyCode: currency?.code.toLowerCase() ?? "",
     });
@@ -139,8 +139,6 @@ export default function DonatePopup() {
               </View>
               <Paragraph>{t("donate_msg")}</Paragraph>
               <TextInput
-                value={amount}
-                onChangeText={(value) => setAmount(value)}
                 left={
                   <TextInput.Affix
                     text={currency?.symbol}
@@ -153,11 +151,10 @@ export default function DonatePopup() {
                 render={(props) => (
                   <MaskedTextInput
                     {...props}
-                    onChangeText={(text, rawText) => {
-                      if (props.onChangeText) {
-                        props.onChangeText(rawText);
-                      }
-                    }}
+                    value={amount.rawText}
+                    onChangeText={(text, rawText) =>
+                      setAmount({ text, rawText })
+                    }
                     type="currency"
                     options={{
                       decimalSeparator: !currency?.zeroDecimal && ".",
@@ -190,7 +187,7 @@ export default function DonatePopup() {
               <Button onPress={hideDonatePopup}>{t("no")}</Button>
               <Button
                 onPress={openPaymentSheet}
-                disabled={!currency || !validAmount || amount.length === 0}
+                disabled={!currency || !validAmount || amount.text.length === 0}
               >
                 {t("donate")}
               </Button>
