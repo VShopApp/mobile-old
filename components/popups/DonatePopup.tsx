@@ -19,7 +19,7 @@ import {
   getCurrencies,
 } from "~/utils/vshop-api";
 import { PaymentSheet, useStripe } from "@stripe/stripe-react-native";
-// import { MaskedTextInput } from "react-native-mask-text";
+import { MaskedTextInput } from "react-native-mask-text";
 import { useUserStore } from "~/hooks/useUserStore";
 import { useFeatureStore } from "~/hooks/useFeatureStore";
 import { useEffect, useState } from "react";
@@ -150,23 +150,21 @@ export default function DonatePopup() {
                 label={t("amount")}
                 keyboardType="numeric"
                 mode="flat"
-                // TODO: fix mask
-                // render={(props) => (
-                //   <MaskedTextInput
-                //     ref={props.ref}
-                //     onChangeText={(text, rawText) => {
-                //       if (props.onChangeText) {
-                //         props.onChangeText(rawText);
-                //       }
-                //     }}
-                //     type="currency"
-                //     options={{
-                //       decimalSeparator: ".",
-                //       groupSeparator: ",",
-                //       precision: 2,
-                //     }}
-                //   />
-                // )}
+                render={(props) => (
+                  <MaskedTextInput
+                    {...props}
+                    onChangeText={(text, rawText) => {
+                      if (props.onChangeText) {
+                        props.onChangeText(rawText);
+                      }
+                    }}
+                    type="currency"
+                    options={{
+                      decimalSeparator: !currency?.zeroDecimal && ".",
+                      precision: 2,
+                    }}
+                  />
+                )}
                 style={{ marginVertical: 5 }}
               />
               {currency && !validAmount && (
