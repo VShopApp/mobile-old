@@ -18,7 +18,7 @@ import {
   generatePaymentSheet,
   getCurrencies,
 } from "~/utils/vshop-api";
-import { useStripe } from "@stripe/stripe-react-native";
+import { PaymentSheet, useStripe } from "@stripe/stripe-react-native";
 // import { MaskedTextInput } from "react-native-mask-text";
 import { useUserStore } from "~/hooks/useUserStore";
 import { useFeatureStore } from "~/hooks/useFeatureStore";
@@ -62,6 +62,10 @@ export default function DonatePopup() {
         merchantDisplayName: "VShop",
         paymentIntentClientSecret: paymentIntent,
         allowsDelayedPaymentMethods: true,
+        billingDetailsCollectionConfiguration: {
+          name: PaymentSheet.CollectionMode.ALWAYS,
+          email: PaymentSheet.CollectionMode.ALWAYS,
+        },
       });
       if (!error) return true;
       return false;
