@@ -1,6 +1,6 @@
 import { Portal, Modal, Button, Text, useTheme } from "react-native-paper";
 import { View } from "react-native";
-import { Video } from "expo-av";
+import { ResizeMode, Video } from "expo-av";
 import { create } from "zustand";
 import { useState } from "react";
 import { Image } from "expo-image";
@@ -69,6 +69,7 @@ function MediaPopup() {
                     borderTopLeftRadius: 5,
                     borderTopRightRadius: 5,
                   }}
+                  resizeMode={ResizeMode.CONTAIN}
                   shouldPlay
                   isMuted={false}
                   isLooping={true}
