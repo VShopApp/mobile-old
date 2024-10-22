@@ -48,7 +48,6 @@
     "expo-web-browser": "~13.0.3",
     "https-browserify": "^1.0.0",
     "i18next": "^23.15.1",
-    "i18next-resources-to-backend": "^1.2.1",
     "jwt-decode": "^4.0.0",
     "posthog-react-native": "^3.3.0",
     "posthog-react-native-session-replay": "^0.1.2",

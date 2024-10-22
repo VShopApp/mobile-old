@@ -3,7 +3,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { ScrollView } from "react-native";
 import { RadioButton } from "react-native-paper";
-import { langCodes } from "~/utils/localization";
+import { resources } from "~/utils/localization";
 
 function Language() {
   const { i18n, t } = useTranslation();
@@ -18,7 +18,7 @@ function Language() {
         }}
         value={i18n.language}
       >
-        {langCodes.map((lang) => (
+        {Object.keys(resources).map((lang) => (
           <RadioButton.Item
             key={lang}
             label={`${t(`languages.${lang}`)} (${lang})`}

@@ -1,6 +1,3 @@
-import languages from "~/assets/langs.json";
-import i18n from "./localization";
-
 export const VCurrencies = {
   VP: "85ad13f7-3d1b-5128-9eb2-7cd8ee0b5741", // VP
   RAD: "e59aa87c-4cbf-517a-5983-6e81511be9b7", // Radianite Points
@@ -26,14 +23,6 @@ export const getAccessTokenFromUri = (uri: string) => {
       /access_token=((?:[a-zA-Z]|\d|\.|-|_)*).*id_token=((?:[a-zA-Z]|\d|\.|-|_)*).*expires_in=(\d*)/
     ) as any
   )[1];
-};
-
-export const getVAPILang = () => {
-  const translation = languages.find(
-    (language) => language.langCode === i18n.language
-  );
-
-  return translation ? translation.VAPILangCode : "en-US";
 };
 
 export const getDisplayIcon = (

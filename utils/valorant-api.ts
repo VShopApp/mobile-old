@@ -1,8 +1,9 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
-import { getVAPILang, VCurrencies, VItemTypes } from "./misc";
+import { VCurrencies, VItemTypes } from "./misc";
 import { IStorefrontV3 } from "../types/StorefrontV3";
 import https from "https-browserify";
+import { getVAPILang } from "./localization";
 
 axios.interceptors.request.use(
   function (config) {

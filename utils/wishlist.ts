@@ -1,4 +1,4 @@
-import { getAccessTokenFromUri, getVAPILang, isSameDayUTC } from "./misc";
+import { getAccessTokenFromUri, isSameDayUTC } from "./misc";
 import {
   getEntitlementsToken,
   getShop,
@@ -8,7 +8,7 @@ import {
 } from "./valorant-api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
-import i18n from "./localization";
+import i18n, { getVAPILang } from "./localization";
 import { checkDonator } from "./vshop-api";
 import { useWishlistStore } from "~/hooks/useWishlistStore";
 import * as Notifications from "expo-notifications";

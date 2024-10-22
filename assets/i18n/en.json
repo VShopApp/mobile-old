@@ -31,11 +31,13 @@
     "it": "Italian",
     "jp": "Japanese",
     "ko": "Korean",
+    "no": "Norwegian",
     "pl": "Polish",
     "pt": "Portuguese",
     "ru": "Russian",
     "th": "Thai",
     "tr": "Turkish",
+    "uk": "Ukrainian",
     "vi": "Vietnamese",
     "zh-Hans": "Chinese Simplified",
     "zh-Hant": "Chinese Traditional"
@@ -104,7 +106,6 @@
     "success": "Your order is processing. An app restart may be required to see your perks.",
     "error": "An error occurred"
   },
-  "disclaimer": "VShop is not endorsed by Riot Games in any way.\nRiot Games, Valorant, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.",
   "copy_riot_id": "Copy Riot Account ID",
   "amount": "Amount",
   "invalid_amount": "Minimum amount is {{amount}}.",
