@@ -1,0 +1,58 @@
+name: Build IPA
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build-ipa:
+    runs-on: macos-14
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: false
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.x
+          cache: pnpm
+
+      - name: 🏗 Setup EAS
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+          packager: pnpm
+
+      - name: 📦 Install dependencies
+        run: pnpm install
+
+      - name: 📦 Expo prebuild
+        run: pnpm prebuild:ios
+
+      # - name: 🔐 Create .env
+      #   run: |
+      #     touch .env
+      #     echo API_URL=${{ secrets.API_URL }} >> .env
+      #     echo STRIPE_PUBLIC_KEY=${{ secrets.STRIPE_PUBLIC_KEY }} >> .env
+
+      - name: Build Archive
+        run: |
+          cd ios
+          xcodebuild archive -workspace vshop_mobile.xcworkspace -scheme vshop_mobile -archivePath output.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO | xcpretty && exit ${PIPESTATUS[0]}
+
+      - name: Create IPA from Archive
+        run: |
+          cp -r ios/output.xcarchive/Products/Applications/ Payload/
+          zip -r vshop.ipa Payload/
+
+      - uses: actions/upload-artifact@v3
+        name: Upload IPA
+        with:
+          name: vshop_ipa
+          path: vshop.ipa
