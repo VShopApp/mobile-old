@@ -13,6 +13,7 @@
       "backgroundColor": "#fa4454"
     },
     "ios": {
+      "bundleIdentifier": "dev.vasc.vshop",
       "supportsTablet": true
     },
     "android": {
