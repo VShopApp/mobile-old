@@ -35,11 +35,11 @@ jobs:
       - name: 📦 Expo prebuild
         run: pnpm prebuild:ios
 
-      # - name: 🔐 Create .env
-      #   run: |
-      #     touch .env
-      #     echo API_URL=${{ secrets.API_URL }} >> .env
-      #     echo STRIPE_PUBLIC_KEY=${{ secrets.STRIPE_PUBLIC_KEY }} >> .env
+      - name: 🔐 Create .env
+        run: |
+          touch .env
+          echo API_URL=${{ secrets.API_URL }} >> .env
+          echo STRIPE_PUBLIC_KEY=${{ secrets.STRIPE_PUBLIC_KEY }} >> .env
 
       - name: Build Archive
         run: |
