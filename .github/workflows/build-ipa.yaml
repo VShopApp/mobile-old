@@ -44,7 +44,7 @@ jobs:
       - name: Build Archive
         run: |
           cd ios
-          xcodebuild archive -workspace VShop.xcworkspace -scheme VShop -archivePath output.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO | xcpretty && exit ${PIPESTATUS[0]}
+          xcodebuild archive -workspace VShop.xcworkspace -scheme VShop -destination 'platform=iOS' -archivePath output.xcarchive -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO | xcpretty && exit ${PIPESTATUS[0]}
 
       - name: Create IPA from Archive
         run: |
