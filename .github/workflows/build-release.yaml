@@ -1,8 +1,10 @@
 on:
   workflow_dispatch:
   push:
+    tags:
+      - "v*"
 
-name: Build apk
+name: Build release
 jobs:
   build-apk:
     runs-on: ubuntu-latest

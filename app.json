@@ -2,7 +2,7 @@
   "expo": {
     "name": "VShop",
     "slug": "vshop",
-    "version": "3.0.0",
+    "version": "3.0.0-beta.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "vshop",
@@ -14,6 +14,7 @@
     },
     "ios": {
       "bundleIdentifier": "dev.vasc.vshop",
+      "buildNumber": "24",
       "supportsTablet": true
     },
     "android": {
@@ -22,7 +23,7 @@
         "backgroundColor": "#fa4454"
       },
       "package": "dev.vasc.vshop2",
-      "versionCode": 68
+      "versionCode": 69
     },
     "web": {
       "bundler": "metro",
